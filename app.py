@@ -7,17 +7,24 @@ import re
 # --- CONFIGURACIÓN DE PÁGINA ---
 st.set_page_config(page_title="Monitor de Empleabilidad", layout="wide")
 
-# --- IMPORTACIÓN ROBUSTA (Evita errores si faltan archivos) ---
+# -------------------------------------------------------------------------
+# Importación de modulos con tolerancia a fallos
+# Usamos try-except para que la Interfaz Gráfica cargue aunque falte algún scraper.
+# -------------------------------------------------------------------------
 try:
     from modules.scraper_getonboard import extraer_getonboard
     from modules.api_remotive import extraer_remotive
     from modules.api_hackernews import extraer_hackernews
 except ImportError:
-    st.warning("⚠️ Nota: Algunos módulos de extracción aún no están disponibles en el sistema.")
+    st.warning("Nota: Algunos módulos de extracción aún no están disponibles en el sistema.")
 
 # --- LÓGICA DE ANÁLISIS ---
 def analizar_skills(df):
-    """Cuenta palabras clave en la descripción breve"""
+    """
+    Analiza la columna 'descripcion_breve' buscando palabras clave (Keywords)
+    de tecnologías específicas usando expresiones regulares (Regex).
+    """
+    # Diccionario de normalización: Agrupa variantes (ej: React, Node -> JS)
     skills_map = {
         'Python': ['python', 'django', 'flask', 'fastapi', 'pandas'],
         'JavaScript': ['javascript', 'js', 'react', 'node', 'vue', 'angular', 'typescript'],

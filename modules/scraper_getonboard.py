@@ -2,7 +2,12 @@ import requests
 from bs4 import BeautifulSoup
 from datetime import datetime
 import urllib3
-
+# -------------------------------------------------------------------------
+# CONFIGURACIÓN DE SEGURIDAD
+# Desactivamos las advertencias de seguridad SSL.
+# Esto es necesario porque en entornos corporativos o educativos (Windows),
+# los certificados de Python a veces fallan al conectar con sitios https.
+# -------------------------------------------------------------------------
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 def extraer_getonboard():
@@ -12,7 +17,9 @@ def extraer_getonboard():
     url = f"{url_base}/jobs/programming"
 
     try:
+        # Usamos verify=False para evitar errores de certificado SSL.
         res = requests.get(url, headers={'User-Agent': 'Mozilla/5.0'}, verify=False)
+        # Manejo de redirecciones o errores 404
         if res.status_code == 404:
             res = requests.get("https://www.getonbrd.com/jobs/programming", verify=False)
 
@@ -24,9 +31,12 @@ def extraer_getonboard():
             url_rel = link.get('href')
             if not titulo:
                 continue
-
+            # --- ESTRATEGIA DE EXCLUSIÓN ---
+            # En lugar de buscar solo "Junior" (que trae pocos resultados),
+            # aceptamos todo y EXCLUIMOS explícitamente los cargos altos.
             t_low = titulo.lower()
             if not any(x in t_low for x in ['senior', 'lead', 'manager', 'architect', 'principal']):
+                # Normalización de datos
                 lista.append({
                     "fecha_extraccion": datetime.now().strftime("%Y-%m-%d"),
                     "titulo": titulo,
