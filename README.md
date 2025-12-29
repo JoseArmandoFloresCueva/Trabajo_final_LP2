@@ -1,7 +1,7 @@
 # 📊 Monitor de Empleabilidad - Informe Técnico
 
 **Curso:** Lenguaje de Programación 2  
-**Fecha:** Diciembre 2025
+**Fecha:** 30 Diciembre 2025
 
 ---
 
@@ -107,7 +107,7 @@ El desarrollo fue modular, permitiendo integración final en `app.py`.
 * Redacción del Informe Técnico (`README.md`).
 * Control de calidad (QA) de la documentación.
 
-### 👨‍💻 Jose: Frontend & API Secundaria
+### 👨‍💻 Jose: Desarrollo Frontend & API Secundaria
 * Desarrollo del Dashboard en `app.py` (Streamlit).
 * Implementación de `api_hackernews.py`.
 * Lógica de visualización y gráficos.
