@@ -126,7 +126,7 @@ El desarrollo fue modular, permitiendo integración final en `app.py`.
     streamlit run app.py
     ```
 
-La aplicación abrirá automáticamente una pestaña en tu navegador predeterminado.
+La aplicación abrirá automáticamente una pestaña en tu navegador predeterminado. Link de la página: https://monitor-tendencias-de-empleabilidad.streamlit.app
 
 
 
